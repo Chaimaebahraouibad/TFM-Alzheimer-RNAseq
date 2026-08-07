@@ -1,0 +1,10 @@
+*.fastq
+*.fastq.gz
+*.bam
+*.bai
+*.sam
+*.sra
+*.zip
+*.html
+__pycache__/
+.env
