@@ -1,8 +1,8 @@
-# TFM - Análisis bioinformático de RNA-seq
+# TFM - Análisis bioinformático sobre el Alzheimer
 
 ## Descripción
 
-Este repositorio contiene los scripts y documentación asociados al Trabajo Fin de Máster, centrado en el análisis bioinformático de datos de RNA-seq.
+Este repositorio contiene los scripts y documentación asociados al Trabajo Fin de Máster asociado a la UNIVERSIDAD INTERNACIONAL DE VALENCIA, centrado en el análisis bioinformático de datos de RNA-seq, sobre Alzheimer. 
 
 ## Dataset
 
@@ -10,14 +10,14 @@ Los datos proceden del dataset GSE329677 disponible en NCBI GEO.
 
 ## Flujo de trabajo
 
-1. Selección de las muestras.
+1. Selección de las muestras, un total de 16 muestras 0h (control) y 336h (irradiadas y control)
 2. Control de calidad mediante FastQC.
 3. Evaluación conjunta mediante MultiQC.
-4. Preprocesamiento de las lecturas, si fuese necesario.
-5. Alineamiento contra el genoma de referencia.
-6. Cuantificación de la expresión génica.
-7. Análisis de expresión diferencial.
-8. Interpretación biológica de los resultados.
+4. Preprocesamiento de las lecturas.
+6. Alineamiento contra el genoma de referencia.
+7. Cuantificación de la expresión génica.
+8. Análisis de expresión diferencial.
+9. Interpretación biológica de los resultados.
 
 ## Herramientas
 
