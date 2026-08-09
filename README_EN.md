@@ -32,7 +32,7 @@ The analyses were performed using RNA-seq data from the **GSE329677** dataset, a
 
 ## Scripts:
 
-01_fastqc.sh — Quality control of RNA-seq reads using FastQC
+- [`01_fastqc.sh`](scripts/01_fastqc.sh) — Quality control of RNA-seq reads using FastQC
 
 ## Tools
 
