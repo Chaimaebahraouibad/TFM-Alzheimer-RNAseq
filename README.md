@@ -1,3 +1,5 @@
+[🇬🇧 English version](README_EN.md)
+
 # TFM - Análisis bioinformático sobre el Alzheimer
 
 ## Descripción
