@@ -6,7 +6,7 @@ Este repositorio contiene los scripts y documentación asociados al Trabajo Fin 
 
 ## Dataset
 
-Los datos proceden del dataset GSE329677 disponible en NCBI GEO.
+Los datos proceden del dataset GSE329677 disponible en NCBI GEO. https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE329677
 
 ## Flujo de trabajo
 
@@ -19,9 +19,25 @@ Los datos proceden del dataset GSE329677 disponible en NCBI GEO.
 8. Análisis de expresión diferencial.
 9. Interpretación biológica de los resultados.
 
+## Análisis incluidos:
+Selección de muestras
+Control de calidad de las lecturas de RNA-seq mediante FastQC
+
+## Dataset:
+Los análisis se realizaron utilizando datos de RNA-seq del conjunto de datos GSE329677, disponible a través de NCBI GEO.
+
+## Scripts:
+01_fastqc.sh — Control de calidad de las lecturas de RNA-seq mediante FastQC
+
 ## Herramientas
 
 - Linux
 - Conda
 - FastQC 0.12.1
 - MultiQC 1.19
+
+## Autora
+
+Chaimae Bahraoui Badouch
+Máster en Bioinformática
+Universidad Internacional de Valencia (VIU)
