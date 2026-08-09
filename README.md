@@ -29,7 +29,8 @@ Control de calidad de las lecturas de RNA-seq mediante FastQC
 Los análisis se realizaron utilizando datos de RNA-seq del conjunto de datos GSE329677, disponible a través de NCBI GEO.
 
 ## Scripts:
-01_fastqc.sh — Control de calidad de las lecturas de RNA-seq mediante FastQC
+
+- [`01_fastqc.sh`](scripts/01_fastqc.sh) — Control de calidad de las lecturas de RNA-seq mediante FastQC
 
 ## Herramientas
 
