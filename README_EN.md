@@ -1,4 +1,6 @@
-# TFM - Bioinformatics Analysis of Alzheimer's Disease
+[🇪🇸 Versión en español](README.md)
+
+# TFM - Bioinformatics Analysis of Alzheimer's Disease[🇪🇸 Versión en español](README.md)
 
 ## Description
 
