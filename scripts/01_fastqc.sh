@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Control de calidad de las lecturas RNA-seq mediante FastQC
+# Quality control of RNA-seq reads using FastQC
 
 mkdir -p fastqc
 
