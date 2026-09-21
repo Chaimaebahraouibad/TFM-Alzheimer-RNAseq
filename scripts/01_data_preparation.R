@@ -25,7 +25,13 @@ if (!file.exists(counts_file)) {
   download.file(counts_url, counts_file, mode = "wb")
 }
 counts <- fread(counts_file)
-stopifnot(nrow(counts) == 78428L)
+
+# The downloaded table contains 78,428 genes and 232 columns:
+# one gene_id column plus 231 RNA-seq libraries.
+stopifnot(
+  nrow(counts) == 78428L,
+  ncol(counts) == 232L
+)
 
 # 2. Obtain GEO sample metadata
 # The TFM analysis uses induced neurons at 336 h in CTL and IR conditions.
@@ -46,6 +52,7 @@ pheno_54$time_h <- 336L
 # 4. Match GEO samples to columns in the processed count matrix.
 # In GEO metadata, the processed count-column identifier is embedded in description.
 count_names <- names(counts)[-1]
+stopifnot(length(count_names) == 231L)
 pheno_54$count_column <- vapply(pheno_54$description, function(desc) {
   hits <- count_names[vapply(count_names, function(nm) grepl(nm, desc, fixed = TRUE), logical(1))]
   if (length(hits) == 1L) hits else NA_character_
