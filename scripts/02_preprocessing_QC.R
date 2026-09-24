@@ -30,7 +30,8 @@
 required <- c(
   "edgeR",
   "limma",
-  "ggplot2"
+  "ggplot2",
+  "patchwork"
 )
 
 missing_packages <- required[
@@ -52,7 +53,7 @@ if (length(missing_packages) > 0L) {
 library(edgeR)
 library(limma)
 library(ggplot2)
-
+library(patchwork)
 
 # =============================================================================
 # 2. OUTPUT DIRECTORIES
@@ -815,10 +816,303 @@ ggsave(
   height = 6,
   dpi = 300
 )
+# =============================================================================
+# 23. COMPOSITE QC FIGURE
+# =============================================================================
+#
+# Composite representation corresponding to the QC figure used in the TFM:
+#   A) Library size
+#   B) Number of detected genes
+#   C) PCA highlighting libraries flagged by the exploratory 1.5 x IQR rule
+#
+# The PCA is based on the voom-transformed expression matrix (v$E).
+# =============================================================================
 
+
+# -----------------------------------------------------------------------------
+# Prepare ordered library-level QC data
+# -----------------------------------------------------------------------------
+
+qc_plot_df <- library_qc[
+  order(library_qc$library_size_millions),
+  ,
+  drop = FALSE
+]
+
+qc_plot_df$library_order_size <- seq_len(
+  nrow(qc_plot_df)
+)
+
+
+genes_plot_df <- library_qc[
+  order(library_qc$detected_genes),
+  ,
+  drop = FALSE
+]
+
+genes_plot_df$library_order_genes <- seq_len(
+  nrow(genes_plot_df)
+)
+
+
+# -----------------------------------------------------------------------------
+# Panel A: library size
+# -----------------------------------------------------------------------------
+
+p_qc_A <- ggplot(
+  qc_plot_df,
+  aes(
+    x = library_order_size,
+    y = library_size_millions
+  )
+) +
+
+  geom_point(
+    aes(
+      colour = ifelse(
+        outlier_any,
+        "Flagged",
+        "Other"
+      )
+    ),
+    size = 2.2
+  ) +
+
+  geom_text(
+    data = qc_plot_df[
+      qc_plot_df$outlier_any,
+      ,
+      drop = FALSE
+    ],
+    aes(
+      label = GSM
+    ),
+    nudge_y = 0.45,
+    size = 2.5,
+    check_overlap = TRUE
+  ) +
+
+  scale_colour_manual(
+    values = c(
+      "Other" = "#F8766D",
+      "Flagged" = "#00BFC4"
+    ),
+    labels = c(
+      "Other" = "Resto",
+      "Flagged" = "Señalada"
+    )
+  ) +
+
+  labs(
+    title = "Tamaño de biblioteca",
+    x = "Bibliotecas ordenadas",
+    y = "Conteos totales (millones)",
+    colour = NULL
+  ) +
+
+  theme_classic(
+    base_size = 10
+  ) +
+
+  theme(
+    legend.position = "top",
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    plot.title = element_text(
+      face = "bold"
+    )
+  )
+
+
+# -----------------------------------------------------------------------------
+# Panel B: detected genes
+# -----------------------------------------------------------------------------
+
+p_qc_B <- ggplot(
+  genes_plot_df,
+  aes(
+    x = library_order_genes,
+    y = detected_genes
+  )
+) +
+
+  geom_point(
+    aes(
+      colour = ifelse(
+        outlier_any,
+        "Flagged",
+        "Other"
+      )
+    ),
+    size = 2.2
+  ) +
+
+  geom_text(
+    data = genes_plot_df[
+      genes_plot_df$outlier_any,
+      ,
+      drop = FALSE
+    ],
+    aes(
+      label = GSM
+    ),
+    nudge_y = 120,
+    size = 2.5,
+    check_overlap = TRUE
+  ) +
+
+  scale_colour_manual(
+    values = c(
+      "Other" = "#F8766D",
+      "Flagged" = "#00BFC4"
+    ),
+    labels = c(
+      "Other" = "Resto",
+      "Flagged" = "Señalada"
+    )
+  ) +
+
+  labs(
+    title = "Genes detectados por biblioteca",
+    x = "Bibliotecas ordenadas",
+    y = "Número de genes detectados",
+    colour = NULL
+  ) +
+
+  theme_classic(
+    base_size = 10
+  ) +
+
+  theme(
+    legend.position = "top",
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    plot.title = element_text(
+      face = "bold"
+    )
+  )
+
+
+# -----------------------------------------------------------------------------
+# Panel C: PCA highlighting QC-flagged libraries
+# -----------------------------------------------------------------------------
+
+p_qc_C <- ggplot(
+  pca_df,
+  aes(
+    x = PC1,
+    y = PC2
+  )
+) +
+
+  geom_point(
+    colour = "grey60",
+    size = 2.1,
+    alpha = 0.9
+  ) +
+
+  geom_point(
+    data = pca_df[
+      pca_df$QC_flagged,
+      ,
+      drop = FALSE
+    ],
+    shape = 21,
+    fill = "white",
+    colour = "black",
+    size = 4,
+    stroke = 1
+  ) +
+
+  geom_text(
+    data = pca_df[
+      pca_df$QC_flagged,
+      ,
+      drop = FALSE
+    ],
+    aes(
+      label = GSM
+    ),
+    nudge_x = -4,
+    nudge_y = 5,
+    size = 2.6,
+    check_overlap = FALSE
+  ) +
+
+  labs(
+    title = "Evaluación de posibles valores atípicos",
+    x = sprintf(
+      "PC1 (%.1f %%)",
+      var_exp[1]
+    ),
+    y = sprintf(
+      "PC2 (%.1f %%)",
+      var_exp[2]
+    )
+  ) +
+
+  theme_classic(
+    base_size = 10
+  ) +
+
+  theme(
+    plot.title = element_text(
+      face = "bold"
+    )
+  )
+
+
+# -----------------------------------------------------------------------------
+# Combine panels
+# -----------------------------------------------------------------------------
+
+p_qc_composite <- (
+  p_qc_A | p_qc_B
+) / p_qc_C +
+
+  plot_layout(
+    heights = c(
+      1,
+      1.15
+    )
+  ) +
+
+  plot_annotation(
+    tag_levels = "A",
+    theme = theme(
+      plot.tag = element_text(
+        face = "bold",
+        size = 12
+      )
+    )
+  )
+
+
+# Display in RStudio
+print(p_qc_composite)
+
+
+# -----------------------------------------------------------------------------
+# Save composite QC figure
+# -----------------------------------------------------------------------------
+
+ggsave(
+  "figures/QC/QC_composite_TFM.png",
+  plot = p_qc_composite,
+  width = 13,
+  height = 7,
+  dpi = 300
+)
+
+ggsave(
+  "figures/QC/QC_composite_TFM.pdf",
+  plot = p_qc_composite,
+  width = 13,
+  height = 7
+)
 
 # =============================================================================
-# 23. QC SUMMARY TABLE
+# 24. QC SUMMARY TABLE
 # =============================================================================
 
 qc_summary <- data.frame(
@@ -865,7 +1159,7 @@ write.csv(
 
 
 # =============================================================================
-# 24. SAVE PROCESSED OBJECTS
+# 25. SAVE PROCESSED OBJECTS
 # =============================================================================
 
 saveRDS(
@@ -885,7 +1179,7 @@ saveRDS(
 
 
 # =============================================================================
-# 25. SESSION INFORMATION
+# 26. SESSION INFORMATION
 # =============================================================================
 
 capture.output(
@@ -895,7 +1189,7 @@ capture.output(
 
 
 # =============================================================================
-# 26. FINAL SUMMARY
+# 27. FINAL SUMMARY
 # =============================================================================
 
 cat("\n")
