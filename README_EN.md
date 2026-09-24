@@ -105,6 +105,7 @@ Structural documentation is available in:
 
 `figures/MMP3_docking/`
 
+
 ## Repository Structure
 
 ```text
@@ -126,7 +127,7 @@ TFM/
 │
 ├── README.md
 └── README_EN.md
-
+```
 
 ## Reproducibility
 
@@ -159,3 +160,8 @@ Main tools and packages include:
 **Chaimae Bahraoui Badouch**  
 Master's Degree in Bioinformatics  
 Universidad Internacional de Valencia (VIU)
+
+
+
+
+
