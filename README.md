@@ -1,10 +1,11 @@
 [🇪🇸 Versión en español](README.md)
 
-# TFM - Análisis bioinformático sobre el Alzheimer
+# TFM - Análisis transcriptómico de la respuesta de neuronas humanas al daño en el ADN inducido por radiación ionizante
 
 ## Descripción
 
-Este repositorio contiene los scripts y documentación asociados al Trabajo Fin de Máster asociado a la UNIVERSIDAD INTERNACIONAL DE VALENCIA, centrado en el análisis bioinformático de datos de RNA-seq, sobre la enfermedad del Alzheimer. 
+Este repositorio contiene los scripts y documentación asociados al Trabajo Fin de Máster asociado a la UNIVERSIDAD INTERNACIONAL DE VALENCIA, centrado en el análisis bioinformático de datos de RNA-seq, sobre la respuesta de neuronas humanas al daño en el ADN inducido por la radiación ionizante
+
 
 ## Dataset
 
