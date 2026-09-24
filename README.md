@@ -91,6 +91,7 @@ La documentación y la figura estructural se encuentran en:
 
 
 
+
 ## Estructura del repositorio
 
 ```text
@@ -112,7 +113,17 @@ TFM/
 │
 ├── README.md
 └── README_EN.md
+```
 
+## Reproducibilidad
+
+Los scripts incluidos en el directorio `scripts/` documentan el flujo de análisis transcriptómico utilizado en este Trabajo Fin de Máster.
+
+Las figuras generadas durante las distintas etapas del análisis se encuentran organizadas en el directorio `figures/`.
+
+Las dependencias de paquetes necesarias para cada etapa del análisis se especifican en los scripts correspondientes.
+
+La caracterización estructural exploratoria de MMP3 se realizó mediante herramientas externas de bioinformática estructural y, por tanto, se documenta de forma independiente del pipeline transcriptómico desarrollado en R.
 
 ## Herramientas principales
 
@@ -132,6 +143,6 @@ Entre las principales herramientas y paquetes utilizados se encuentran:
 
 ## Autora
 
-Chaimae Bahraoui Badouch
-Máster Universitario en Bioinformática
+**Chaimae Bahraoui Badouch**  
+Máster Universitario en Bioinformática  
 Universidad Internacional de Valencia (VIU)
